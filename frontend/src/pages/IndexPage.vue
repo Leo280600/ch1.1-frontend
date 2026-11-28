@@ -4,7 +4,6 @@
       Version Control + Docker Demo (Quasar)
     </div>
 
-
     <q-card class="q-mb-md">
       <q-card-section>
         <div class="text-h6">Git Workflow (ตัวอย่างขั้นตอนทำงาน)</div>
@@ -22,8 +21,7 @@
       </q-card-section>
     </q-card>
 
-
-    <q-card>
+    <q-card class="q-mb-md">
       <q-card-section>
         <div class="text-h6">Docker Concepts (สรุปสั้น ๆ)</div>
         <q-list bordered separator class="q-mt-sm">
@@ -36,9 +34,24 @@
         </q-list>
       </q-card-section>
     </q-card>
+
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Docker Quick Reference (คำสั่งที่ใช้บ่อย)</div>
+        <q-list bordered separator class="q-mt-sm">
+          <q-item v-for="(cmd, index) in dockerCommands" :key="index">
+            <q-item-section>
+              <q-item-label>
+                <code>{{ cmd.command }}</code>
+              </q-item-label>
+              <q-item-label caption>{{ cmd.usage }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
-
 
 <script setup>
 const gitSteps = [
@@ -62,8 +75,7 @@ const gitSteps = [
     title: 'push ขึ้น GitHub',
     detail: 'ใช้ git push -u origin feature/quasar-demo แล้วเปิด Pull Request',
   },
-]
-
+];
 
 const dockerItems = [
   {
@@ -82,5 +94,40 @@ const dockerItems = [
     title: 'Network',
     detail: 'ให้บริการใน Docker ติดต่อกันได้ เช่น Nginx ส่งต่อคำขอไปยัง Express',
   },
-]
+];
+
+const dockerCommands = [
+  {
+    command: 'docker build -t <ชื่อ>:<tag> -f <Dockerfile> <context>',
+    usage: 'ใช้เมื่อต้องการสร้าง image จาก Dockerfile หลังแก้ซอร์สโค้ดแล้ว',
+  },
+  {
+    command: 'docker image ls',
+    usage: 'ใช้เมื่อต้องการดูรายการ image ที่มีอยู่บนเครื่อง พร้อมขนาดและวันที่สร้าง',
+  },
+  {
+    command: 'docker run -d -p 8080:80 --name <ชื่อ> <image>',
+    usage: 'ใช้เมื่อต้องการรัน container ในพื้นหลัง และส่งพอร์ต 8080 บนเครื่องไปยังพอร์ต 80 ใน container',
+  },
+  {
+    command: 'docker ps',
+    usage: 'ใช้เมื่อต้องการดูว่ามี container ใดกำลังทำงานอยู่ ใส่ -a เพื่อดูทุกสถานะรวมถึงที่หยุดแล้ว',
+  },
+  {
+    command: 'docker logs <ชื่อ>',
+    usage: 'ใช้เมื่อต้องการดู log ของ container เพื่อตรวจหาสาเหตุเมื่อแอปทำงานผิดปกติ',
+  },
+  {
+    command: 'docker stop <ชื่อ> && docker rm <ชื่อ>',
+    usage: 'ใช้เมื่อต้องการหยุดและลบ container เดิมก่อนรันใหม่ เพื่อคืนพอร์ต 8080 และใช้ชื่อเดิมได้',
+  },
+  {
+    command: 'docker compose up -d --build',
+    usage: 'ใช้เมื่อต้องการ build และรันทุกบริการที่ระบุใน docker-compose.yml ในพื้นหลัง',
+  },
+  {
+    command: 'docker compose down',
+    usage: 'ใช้เมื่อต้องการหยุดและลบ container, network ที่ Compose สร้างขึ้น เมื่อเลิกใช้งานหรือก่อนเริ่มใหม่',
+  },
+];
 </script>

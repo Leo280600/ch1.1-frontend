@@ -1,0 +1,22 @@
+node_modules/
+.quasar/
+dist/
+.tmp/
+
+
+# Environment
+.env
+.env.*
+!.env.example
+
+
+# OS และ editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+
+# Logs
+logs/
+*.log
